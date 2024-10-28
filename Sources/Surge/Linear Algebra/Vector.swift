@@ -684,10 +684,12 @@ public func distSq(_ lhs: Vector<Float>, _ rhs: Vector<Float>) -> Float {
     return distSq(lhs.scalars, rhs.scalars)
 }
 
-public func sqrt(_ lhs: Vector<Float>) -> Vector<Float> {
+// MARK: - Square root
+
+public func sqrt(_ lhs: Vector<Double>) -> Vector<Double> {
   return Vector(sqrt(lhs.scalars))
 }
 
-public func sqrt(_ lhs: Vector<Double>) -> Vector<Double> {
+public func sqrt(_ lhs: Vector<Float>) -> Vector<Float> {
   return Vector(sqrt(lhs.scalars))
 }

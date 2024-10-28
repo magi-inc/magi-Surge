@@ -983,10 +983,50 @@ public func eigenDecompose(_ lhs: Matrix<Double>) throws -> MatrixEigenDecomposi
     return MatrixEigenDecompositionResult<Double>(rowCount: lhs.rows, eigenValueRealParts: eigenValueRealParts, eigenValueImaginaryParts: eigenValueImaginaryParts, leftEigenVectorWork: leftEigenVectorWork, rightEigenVectorWork: rightEigenVectorWork)
 }
 
+// MARK: - Square root
+
+public func sqrt(_ lhs: Matrix<Double>) -> Matrix<Double> {
+    return Matrix(rows: lhs.rows, columns: lhs.columns, grid: sqrt(lhs.grid))
+}
+
 public func sqrt(_ lhs: Matrix<Float>) -> Matrix<Float> {
     return Matrix(rows: lhs.rows, columns: lhs.columns, grid: sqrt(lhs.grid))
 }
 
-public func sqrt(_ lhs: Matrix<Double>) -> Matrix<Double> {
-    return Matrix(rows: lhs.rows, columns: lhs.columns, grid: sqrt(lhs.grid))
+// MARK: - Element-wise Division
+
+public func eldiv(_ lhs: Matrix<Double>, _ rhs: Matrix<Double>) -> Matrix<Double> {
+    return withMatrix(from: lhs) { eldivInPlace(&$0, rhs) }
+}
+
+public func eldiv(_ lhs: Matrix<Float>, _ rhs: Matrix<Float>) -> Matrix<Float> {
+    return withMatrix(from: lhs) { eldivInPlace(&$0, rhs) }
+}
+
+public func ./ (lhs: Matrix<Double>, rhs: Matrix<Double>) -> Matrix<Double> {
+    return eldiv(lhs, rhs)
+}
+
+public func ./ (lhs: Matrix<Float>, rhs: Matrix<Float>) -> Matrix<Float> {
+    return eldiv(lhs, rhs)
+}
+
+// MARK: - Element-wise Division: In Place
+
+func eldivInPlace(_ lhs: inout Matrix<Double>, _ rhs: Matrix<Double>) {
+    precondition(lhs.rows == rhs.rows && lhs.columns == rhs.columns, "Matrix dimensions not compatible with element-wise division")
+    eldivInPlace(&lhs.grid, rhs.grid)
+}
+
+func eldivInPlace(_ lhs: inout Matrix<Float>, _ rhs: Matrix<Float>) {
+  precondition(lhs.rows == rhs.rows && lhs.columns == rhs.columns, "Matrix dimensions not compatible with element-wise division")
+  eldivInPlace(&lhs.grid, rhs.grid)
+}
+
+public func ./= (lhs: inout Matrix<Double>, rhs: Matrix<Double>) {
+    return eldivInPlace(&lhs, rhs)
+}
+
+public func ./= (lhs: inout Matrix<Float>, rhs: Matrix<Float>) {
+    return eldivInPlace(&lhs, rhs)
 }
