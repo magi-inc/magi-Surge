@@ -982,3 +982,11 @@ public func eigenDecompose(_ lhs: Matrix<Double>) throws -> MatrixEigenDecomposi
 
     return MatrixEigenDecompositionResult<Double>(rowCount: lhs.rows, eigenValueRealParts: eigenValueRealParts, eigenValueImaginaryParts: eigenValueImaginaryParts, leftEigenVectorWork: leftEigenVectorWork, rightEigenVectorWork: rightEigenVectorWork)
 }
+
+public func sqrt(_ lhs: Matrix<Float>) -> Matrix<Float> {
+    return Matrix(rows: lhs.rows, columns: lhs.columns, grid: sqrt(lhs.grid))
+}
+
+public func sqrt(_ lhs: Matrix<Double>) -> Matrix<Double> {
+    return Matrix(rows: lhs.rows, columns: lhs.columns, grid: sqrt(lhs.grid))
+}
